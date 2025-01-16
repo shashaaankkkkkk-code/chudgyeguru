@@ -3,21 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chud Gye Guru</title>
-    <!-- Preload font to avoid FOIT (Flash of Invisible Text) -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Honk&display=swap" as="style">
-    <link rel="preload" href="https://fonts.gstatic.com/s/honk/v2/hv-TqgwAH8w.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Honk&display=swap">
+    <title>Night Sky Effect</title>
+    <!-- Simplified font loading -->
+    <link href="https://fonts.googleapis.com/css2?family=Honk&display=block" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @font-face {
-            font-family: 'Honk';
-            font-style: normal;
-            font-weight: 400;
-            font-display: swap;
-            src: url(https://fonts.gstatic.com/s/honk/v2/hv-TqgwAH8w.woff2) format('woff2');
-            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Honk&display=swap');
 
         body {
             margin: 0;
@@ -25,8 +16,6 @@
             background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
             min-height: 100vh;
             position: relative;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
         .star {
@@ -64,8 +53,6 @@
             height: min(300px, 70vw);
             object-fit: cover;
             border-radius: 10px;
-            -webkit-transform: translate3d(0,0,0);
-            transform: translate3d(0,0,0);
         }
 
         .centered-text {
@@ -74,13 +61,11 @@
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 100;
-            font-family: 'Honk', 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
-            animation: textGlow 2s ease-in-out infinite alternate;
+            font-family: 'Honk', cursive;
             text-align: center;
             width: 90vw;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            letter-spacing: 1px;
+            white-space: nowrap;
+            color: white;
         }
 
         .footer-text {
@@ -93,7 +78,7 @@
             font-size: 0.875rem;
             z-index: 100;
             padding: 0 1rem;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         .footer-text a {
@@ -106,87 +91,28 @@
             color: #5271ff;
         }
 
-        @keyframes textGlow {
-            from {
-                text-shadow: 0 0 20px #fff, 
-                            0 0 30px #5271ff,
-                            0 0 40px #5271ff,
-                            0 0 50px #5271ff;
-            }
-            to {
-                text-shadow: 0 0 30px #fff,
-                            0 0 40px #00ff88,
-                            0 0 50px #00ff88,
-                            0 0 60px #00ff88;
-            }
-        }
-
-        .shooting-star {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: linear-gradient(45deg, #ffffff, transparent);
-            animation: shoot var(--shoot-duration) linear infinite;
-            opacity: 0;
-        }
-
-        @keyframes shoot {
-            0% { 
-                transform: translate(0, 0) rotate(45deg);
-                opacity: 1;
-            }
-            100% { 
-                transform: translate(200px, 200px) rotate(45deg);
-                opacity: 0;
-            }
-        }
-
-        /* Responsive text sizes with improved iOS support */
         @media (max-width: 768px) {
             .centered-text {
-                font-size: 15vw !important;
-                line-height: 1.2;
-                padding: 0 10px;
+                font-size: 15vw;
             }
         }
 
         @media (min-width: 769px) {
             .centered-text {
-                font-size: 130px !important;
-                line-height: 1.2;
-            }
-        }
-
-        /* iOS specific fixes */
-        @supports (-webkit-touch-callout: none) {
-            .centered-text {
-                /* Better font rendering on iOS */
-                -webkit-text-stroke: 1px transparent;
-                text-rendering: optimizeLegibility;
+                font-size: 130px;
             }
         }
     </style>
 </head>
-<body class="min-h-screen">
-    <!-- Centered Text -->
-    <h1 class="centered-text font-bold text-white">CHUD GYE GURU</h1>
-    
-    <!-- Bouncing Image -->
+<body>
+    <h1 class="centered-text">CHUD GYE GURU</h1>
     <img src="/chudgyeguru.png" alt="Bouncing image" class="bouncing-image">
-
-    <!-- Footer Text -->
     <div class="footer-text">
         <p>Made with ❤️ by <a href="https://github.com/shashaaankkkkk" target="_blank">@shashaaankkkkk</a></p>
-        <p>&copy; 2024 All rights reserved</p>
+        <p>&copy; 2025 All rights reserved</p>
     </div>
 
     <script>
-        // Ensure font is loaded before rendering
-        document.fonts.ready.then(() => {
-            document.body.style.visibility = 'visible';
-        });
-
-        // Create stars with enhanced twinkling
         function createStars(count) {
             const container = document.body;
             for (let i = 0; i < count; i++) {
@@ -202,21 +128,6 @@
             }
         }
 
-        // Create shooting stars
-        function createShootingStar() {
-            const star = document.createElement('div');
-            star.className = 'shooting-star';
-            star.style.left = Math.random() * window.innerWidth + 'px';
-            star.style.top = Math.random() * (window.innerHeight / 2) + 'px';
-            star.style.setProperty('--shoot-duration', Math.random() * 2 + 1 + 's');
-            document.body.appendChild(star);
-            
-            setTimeout(() => {
-                star.remove();
-            }, parseInt(star.style.getPropertyValue('--shoot-duration')) * 1000);
-        }
-
-        // DVD screensaver motion with rotation
         const image = document.querySelector('.bouncing-image');
         let imageWidth = Math.min(300, window.innerWidth * 0.7);
         let xPos = Math.random() * (window.innerWidth - imageWidth);
@@ -230,10 +141,8 @@
             yPos += ySpeed;
             angle += 2;
 
-            // Update image width based on viewport
             imageWidth = Math.min(300, window.innerWidth * 0.7);
 
-            // Bounce off walls with responsive boundaries
             if (xPos + imageWidth > window.innerWidth || xPos < 0) {
                 xSpeed = -xSpeed;
             }
@@ -241,40 +150,12 @@
                 ySpeed = -ySpeed;
             }
 
-            // Use transform3d for better performance
-            image.style.transform = `translate3d(${xPos}px, ${yPos}px, 0) rotate(${angle}deg)`;
+            image.style.transform = `translate(${xPos}px, ${yPos}px) rotate(${angle}deg)`;
             requestAnimationFrame(animate);
         }
 
-        // Initialize everything
-        createStars(200);
+        createStars(150); // Reduced number of stars to improve performance
         animate();
-        
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            // Keep image within bounds after resize
-            if (xPos + imageWidth > window.innerWidth) {
-                xPos = window.innerWidth - imageWidth;
-            }
-            if (yPos + imageWidth > window.innerHeight) {
-                yPos = window.innerHeight - imageWidth;
-            }
-        });
-        
-        // Periodically create shooting stars
-        setInterval(createShootingStar, 3000);
-        
-        // Periodically twinkle random stars
-        setInterval(() => {
-            const stars = document.querySelectorAll('.star');
-            stars.forEach(star => {
-                if (Math.random() < 0.1) {
-                    star.style.animation = 'none';
-                    star.offsetHeight;
-                    star.style.animation = null;
-                }
-            });
-        }, 2000);
     </script>
 </body>
 </html>
