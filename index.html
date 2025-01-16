@@ -1,13 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Hello, world!</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="" />
-  <link rel="icon" href="favicon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Night Sky Effect</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Honk&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+        }
+
+        .star {
+            position: absolute;
+            background: #FFF;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite;
+        }
+
+        .star::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #FFF;
+            animation: pulse var(--duration) ease-in-out infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.5); }
+        }
+
+        .bouncing-image {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+
+        }
+
+        .centered-text {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+            font-family: 'Honk', system-ui;
+            animation: textGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes textGlow {
+            from {
+                text-shadow: 0 0 20px #fff, 
+                            0 0 30px #5271ff,
+                            0 0 40px #5271ff,
+                            0 0 50px #5271ff;
+            }
+            to {
+                text-shadow: 0 0 30px #fff,
+                            0 0 40px #00ff88,
+                            0 0 50px #00ff88,
+                            0 0 60px #00ff88;
+            }
+        }
+
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: linear-gradient(45deg, #ffffff, transparent);
+            animation: shoot var(--shoot-duration) linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes shoot {
+            0% { 
+                transform: translate(0, 0) rotate(45deg);
+                opacity: 1;
+            }
+            100% { 
+                transform: translate(200px, 200px) rotate(45deg);
+                opacity: 0;
+            }
+        }
+    </style>
 </head>
-<body>
-  <h1>Hello, world!</h1>
+<body class="min-h-screen">
+    <!-- Centered Text -->
+    <h1 class="centered-text text-6xl font-bold text-white">CHUD GYE GURU</h1>
+    
+    <!-- Bouncing Image -->
+    <img src="/chudgyeguru.png" alt="Bouncing image" class="bouncing-image">
+
+    <script>
+        // Create stars with enhanced twinkling
+        function createStars(count) {
+            const container = document.body;
+            for (let i = 0; i < count; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 3;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.top = Math.random() * 100 + 'vh';
+                star.style.setProperty('--duration', (Math.random() * 3 + 1) + 's');
+                container.appendChild(star);
+            }
+        }
+
+        // Create shooting stars
+        function createShootingStar() {
+            const star = document.createElement('div');
+            star.className = 'shooting-star';
+            star.style.left = Math.random() * window.innerWidth + 'px';
+            star.style.top = Math.random() * (window.innerHeight / 2) + 'px';
+            star.style.setProperty('--shoot-duration', Math.random() * 2 + 1 + 's');
+            document.body.appendChild(star);
+            
+            setTimeout(() => {
+                star.remove();
+            }, parseInt(star.style.getPropertyValue('--shoot-duration')) * 1000);
+        }
+
+        // DVD screensaver motion
+        const image = document.querySelector('.bouncing-image');
+        let xPos = Math.random() * (window.innerWidth - 200);
+        let yPos = Math.random() * (window.innerHeight - 200);
+        let xSpeed = 2;
+        let ySpeed = 2;
+
+        function animate() {
+            xPos += xSpeed;
+            yPos += ySpeed;
+
+            // Bounce off walls
+            if (xPos + 150 > window.innerWidth || xPos < 0) {
+                xSpeed = -xSpeed;
+            }
+            if (yPos + 150 > window.innerHeight || yPos < 0) {
+                ySpeed = -ySpeed;
+            }
+
+            image.style.transform = `translate(${xPos}px, ${yPos}px)`;
+            requestAnimationFrame(animate);
+        }
+
+        // Initialize everything
+        createStars(200);  // More stars for denser night sky
+        animate();
+        
+        // Periodically create shooting stars
+        setInterval(createShootingStar, 3000);
+        
+        // Periodically twinkle random stars
+        setInterval(() => {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                if (Math.random() < 0.1) {
+                    star.style.animation = 'none';
+                    star.offsetHeight; // Trigger reflow
+                    star.style.animation = null;
+                }
+            });
+        }, 2000);
+    </script>
 </body>
 </html>
