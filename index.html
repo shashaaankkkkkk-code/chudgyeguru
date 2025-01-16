@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Honk&display=block" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Load font first */
         @import url('https://fonts.googleapis.com/css2?family=Honk&display=swap');
 
         body {
@@ -56,7 +55,6 @@
             border-radius: 10px;
         }
 
-        /* Simplified text styling */
         .centered-text {
             position: fixed;
             top: 50%;
@@ -68,11 +66,6 @@
             width: 90vw;
             white-space: nowrap;
             color: white;
-        }
-
-        /* Separate animation for better performance */
-        .glow-animation {
-            animation: textGlow 2s ease-in-out infinite alternate;
         }
 
         .footer-text {
@@ -98,42 +91,6 @@
             color: #5271ff;
         }
 
-        @keyframes textGlow {
-            from {
-                text-shadow: 0 0 20px #fff, 
-                            0 0 30px #5271ff,
-                            0 0 40px #5271ff,
-                            0 0 50px #5271ff;
-            }
-            to {
-                text-shadow: 0 0 30px #fff,
-                            0 0 40px #00ff88,
-                            0 0 50px #00ff88,
-                            0 0 60px #00ff88;
-            }
-        }
-
-        .shooting-star {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: linear-gradient(45deg, #ffffff, transparent);
-            animation: shoot var(--shoot-duration) linear infinite;
-            opacity: 0;
-        }
-
-        @keyframes shoot {
-            0% { 
-                transform: translate(0, 0) rotate(45deg);
-                opacity: 1;
-            }
-            100% { 
-                transform: translate(200px, 200px) rotate(45deg);
-                opacity: 0;
-            }
-        }
-
-        /* Simplified responsive text sizes */
         @media (max-width: 768px) {
             .centered-text {
                 font-size: 15vw;
@@ -148,20 +105,14 @@
     </style>
 </head>
 <body>
-    <!-- Simplified text structure -->
-    <h1 class="centered-text glow-animation">CHUD GYE GURU</h1>
-    
-    <!-- Bouncing Image -->
+    <h1 class="centered-text">CHUD GYE GURU</h1>
     <img src="/chudgyeguru.png" alt="Bouncing image" class="bouncing-image">
-
-    <!-- Footer Text -->
     <div class="footer-text">
         <p>Made with ❤️ by <a href="https://github.com/shashaaankkkkk" target="_blank">@shashaaankkkkk</a></p>
-        <p>&copy; 2024 All rights reserved</p>
+        <p>&copy; 2025 All rights reserved</p>
     </div>
 
     <script>
-        // Create stars with enhanced twinkling
         function createStars(count) {
             const container = document.body;
             for (let i = 0; i < count; i++) {
@@ -177,21 +128,6 @@
             }
         }
 
-        // Create shooting stars
-        function createShootingStar() {
-            const star = document.createElement('div');
-            star.className = 'shooting-star';
-            star.style.left = Math.random() * window.innerWidth + 'px';
-            star.style.top = Math.random() * (window.innerHeight / 2) + 'px';
-            star.style.setProperty('--shoot-duration', Math.random() * 2 + 1 + 's');
-            document.body.appendChild(star);
-            
-            setTimeout(() => {
-                star.remove();
-            }, parseInt(star.style.getPropertyValue('--shoot-duration')) * 1000);
-        }
-
-        // DVD screensaver motion with rotation
         const image = document.querySelector('.bouncing-image');
         let imageWidth = Math.min(300, window.innerWidth * 0.7);
         let xPos = Math.random() * (window.innerWidth - imageWidth);
@@ -218,34 +154,8 @@
             requestAnimationFrame(animate);
         }
 
-        // Initialize everything
-        createStars(200);
+        createStars(150); // Reduced number of stars to improve performance
         animate();
-        
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            if (xPos + imageWidth > window.innerWidth) {
-                xPos = window.innerWidth - imageWidth;
-            }
-            if (yPos + imageWidth > window.innerHeight) {
-                yPos = window.innerHeight - imageWidth;
-            }
-        });
-        
-        // Periodically create shooting stars
-        setInterval(createShootingStar, 3000);
-        
-        // Periodically twinkle random stars
-        setInterval(() => {
-            const stars = document.querySelectorAll('.star');
-            stars.forEach(star => {
-                if (Math.random() < 0.1) {
-                    star.style.animation = 'none';
-                    star.offsetHeight;
-                    star.style.animation = null;
-                }
-            });
-        }, 2000);
     </script>
 </body>
 </html>
